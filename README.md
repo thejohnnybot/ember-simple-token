@@ -25,7 +25,8 @@ export default Ember.Component.extend({
       });
     }
   }
-});```
+});
+```
 
 ### Code for the template
 
@@ -40,7 +41,8 @@ export default Ember.Component.extend({
     {{input value=password placeholder='Enter Password' class='form-control' type='password'}}
   </div>
   <button type="submit" class="btn btn-default">Login</button>
-</form>```
+</form>
+```
 
 ### TODO:
 - [] Test
