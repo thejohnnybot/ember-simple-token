@@ -9,7 +9,7 @@ This README outlines the details of collaborating on this Ember addon.
 
 ### Code to put in your component
 
-```
+```javascript
 const { service } = Ember.inject;
 
 export default Ember.Component.extend({
@@ -40,8 +40,7 @@ export default Ember.Component.extend({
     {{input value=password placeholder='Enter Password' class='form-control' type='password'}}
   </div>
   <button type="submit" class="btn btn-default">Login</button>
-</form>
-```
+</form>```
 
 ### TODO:
 - [] Test
