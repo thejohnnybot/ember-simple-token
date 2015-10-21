@@ -30,7 +30,7 @@ export default Ember.Component.extend({
 
 ### Code for the template
 
-```
+```html
 <form {{action 'authenticate' on='submit'}}>
   <div class="form-group">
     <label for="identification">Login</label>
