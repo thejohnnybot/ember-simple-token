@@ -1,6 +1,6 @@
 {
   "name": "ember-simple-token",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Ember-cli addon for using token authentication with simple-auth 1.0",
   "directories": {
     "doc": "doc",
@@ -35,7 +35,6 @@
     "ember-disable-prototype-extensions": "^1.0.0",
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-export-application-global": "^1.0.4",
-    "ember-fetch": "1.2.2",
     "ember-resolver": "^2.0.3",
     "ember-simple-auth": "1.0.0",
     "ember-try": "~0.0.8"
@@ -44,7 +43,8 @@
     "ember-addon"
   ],
   "dependencies": {
-    "ember-cli-babel": "^5.1.5"
+    "ember-cli-babel": "^5.1.5",
+    "ember-fetch": "1.2.2"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
