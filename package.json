@@ -1,6 +1,6 @@
 {
   "name": "ember-simple-token",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Ember-cli addon for using token authentication with simple-auth 1.0",
   "directories": {
     "doc": "doc",
@@ -11,7 +11,7 @@
     "start": "ember server",
     "test": "ember try:testall"
   },
-  "repository": "https://github.com/datazombie/ember-simple-token",
+  "repository": "https://github.com/datajohnny/ember-simple-token",
   "engines": {
     "node": "4.2.0"
   },
