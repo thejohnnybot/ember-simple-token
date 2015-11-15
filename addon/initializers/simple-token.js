@@ -7,5 +7,5 @@ export function initialize(application) {
 
 export default {
   name: 'simple-token',
-  initialize: initialize
+  initialize
 };

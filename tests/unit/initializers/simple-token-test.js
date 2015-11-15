@@ -1,14 +1,13 @@
 import Ember from 'ember';
-import { initialize } from '../../../initializers/simple-token';
+import SimpleTokenInitializer from '../../../initializers/simple-token';
 import { module, test } from 'qunit';
 
-var registry, application;
+let application;
 
 module('Unit | Initializer | simple token', {
-  beforeEach: function() {
+  beforeEach() {
     Ember.run(function() {
       application = Ember.Application.create();
-      registry = application.registry;
       application.deferReadiness();
     });
   }
@@ -16,7 +15,7 @@ module('Unit | Initializer | simple token', {
 
 // Replace this with your real tests.
 test('it works', function(assert) {
-  initialize(application);
+  SimpleTokenInitializer.initialize(application);
 
   // you would normally confirm the results of the initializer here
   assert.ok(true);
