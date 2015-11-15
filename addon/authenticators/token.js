@@ -1,4 +1,5 @@
 import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
+import Ember from 'ember';
 import fetch from 'fetch';
 
 const { get, isEmpty, RSVP } = Ember;

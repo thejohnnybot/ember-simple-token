@@ -16,7 +16,7 @@ module('Unit | Initializer | simple token', {
 
 // Replace this with your real tests.
 test('it works', function(assert) {
-  initialize(registry, application);
+  initialize(application);
 
   // you would normally confirm the results of the initializer here
   assert.ok(true);
