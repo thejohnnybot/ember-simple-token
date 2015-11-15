@@ -10,11 +10,11 @@ This README outlines the details of collaborating on this Ember addon.
 ### Code to put in your component
 
 ```javascript
+import Ember from 'ember';
+
 const { service } = Ember.inject;
 
 export default Ember.Component.extend({
-  layout: layout,
-
   session: service(),
 
   actions: {
