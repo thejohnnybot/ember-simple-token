@@ -54,7 +54,14 @@ export default DS.JSONAPIAdapter.extend(DataAdapterMixin, {
   authorizer: 'authorizer:token'
 });
 ```
+### Change Configuration
 
+```javascript
+ENV['simple-token'] = {
+  serverTokenEndpoint: "/another-token",
+  identificationAttributeName: "email"
+};
+```
 
 ### TODO:
 - [] Test

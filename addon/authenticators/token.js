@@ -1,16 +1,17 @@
 import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
 import Ember from 'ember';
 import fetch from 'fetch';
+import config from 'ember-get-config';
 
 const { get, isEmpty, RSVP } = Ember;
 
 export default BaseAuthenticator.extend({
 
-  serverTokenEndpoint: '/token',
+  serverTokenEndpoint: config['simple-token'].serverTokenEndpoint || '/token',
 
   tokenAttributeName: 'token',
 
-  identificationAttributeName: 'email',
+  identificationAttributeName: config['simple-token'].identificationAttributeName || 'email',
 
   authenticate(credentials) {
     return fetch(this.serverTokenEndpoint, {

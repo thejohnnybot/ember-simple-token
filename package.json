@@ -1,6 +1,6 @@
 {
   "name": "ember-simple-token",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "The default blueprint for ember-cli addons.",
   "directories": {
     "doc": "doc",
@@ -36,6 +36,7 @@
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-export-application-global": "^1.0.4",
     "ember-fetch": "1.2.2",
+    "ember-get-config": "0.0.2",
     "ember-simple-auth": "1.0.1",
     "ember-try": "~0.0.8"
   },
