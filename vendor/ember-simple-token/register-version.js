@@ -1,1 +1,1 @@
-Ember.libraries.register('Ember Simple Token', '0.0.5');
+Ember.libraries.register('Ember Simple Token', '0.0.6');
