@@ -5,13 +5,15 @@ import config from 'ember-get-config';
 
 const { get, isEmpty, RSVP } = Ember;
 
+Ember.Logger.debug(config);
+
 export default BaseAuthenticator.extend({
 
-  serverTokenEndpoint: config['simple-token'].serverTokenEndpoint || '/token',
+  serverTokenEndpoint: config['ember-simple-token'].serverTokenEndpoint || '/token',
 
   tokenAttributeName: 'token',
 
-  identificationAttributeName: config['simple-token'].identificationAttributeName || 'email',
+  identificationAttributeName: config['ember-simple-token'].identificationAttributeName || 'email',
 
   authenticate(credentials) {
     return fetch(this.serverTokenEndpoint, {
