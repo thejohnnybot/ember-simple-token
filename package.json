@@ -1,6 +1,6 @@
 {
   "name": "ember-simple-token",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "The default blueprint for ember-cli addons.",
   "directories": {
     "doc": "doc",
@@ -13,7 +13,7 @@
   },
   "repository": "https://github.com/datajohnny/ember-simple-token",
   "engines": {
-    "node": "4.2.1"
+    "node": ">= 4.2.0"
   },
   "author": "",
   "license": "MIT",
