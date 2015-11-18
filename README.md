@@ -57,7 +57,7 @@ export default DS.JSONAPIAdapter.extend(DataAdapterMixin, {
 ### Change Configuration
 
 ```javascript
-ENV['simple-token'] = {
+ENV['ember-simple-token'] = {
   serverTokenEndpoint: "/another-token",
   identificationAttributeName: "email"
 };
