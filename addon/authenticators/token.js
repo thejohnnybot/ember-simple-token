@@ -5,8 +5,6 @@ import config from 'ember-get-config';
 
 const { get, isEmpty, RSVP } = Ember;
 
-Ember.Logger.debug(config);
-
 export default BaseAuthenticator.extend({
 
   serverTokenEndpoint: config['ember-simple-token'].serverTokenEndpoint || '/token',
