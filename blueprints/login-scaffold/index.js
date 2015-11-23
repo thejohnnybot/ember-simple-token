@@ -10,6 +10,7 @@ module.exports = {
         if (options.inAddon) {
           return path.join('tests', 'dummy');
         }
+        return '/';
       }
     };
   }
