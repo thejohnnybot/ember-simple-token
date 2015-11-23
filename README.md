@@ -63,5 +63,10 @@ ENV['ember-simple-token'] = {
 };
 ```
 
+### Generators
+`ember g login-scaffold <name>`
+
+Will generate all the code seen above in pod structure in a component
+
 ### TODO:
 - [] Test
