@@ -4,6 +4,7 @@ import fetch from 'fetch';
 import config from 'ember-get-config';
 
 const { get, isEmpty, RSVP } = Ember;
+const { resolve, reject } = RSVP;
 
 export default BaseAuthenticator.extend({
 
@@ -22,7 +23,11 @@ export default BaseAuthenticator.extend({
       },
       body: JSON.stringify(credentials)
     }).then((response) => {
-      return response.json();
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      } else {
+        reject(new Error(response.statusText));
+      }
     });
   },
 
@@ -40,7 +45,7 @@ export default BaseAuthenticator.extend({
   },
 
   invalidate() {
-    return RSVP.resolve();
+    return resolve();
   }
 
 });
