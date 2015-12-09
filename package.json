@@ -1,6 +1,6 @@
 {
   "name": "ember-simple-token",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "description": "Simple token-based authentication for ember-simple-auth",
   "directories": {
     "doc": "doc",
