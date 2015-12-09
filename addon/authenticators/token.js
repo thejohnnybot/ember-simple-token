@@ -7,7 +7,6 @@ const { get, isEmpty, RSVP } = Ember;
 const { resolve, reject } = RSVP;
 
 export default BaseAuthenticator.extend({
-
   serverTokenEndpoint: config['ember-simple-token'].serverTokenEndpoint || '/token',
 
   tokenAttributeName: 'token',
@@ -24,9 +23,9 @@ export default BaseAuthenticator.extend({
       body: JSON.stringify(credentials)
     }).then((response) => {
       if (response.status >= 200 && response.status < 300) {
-        return response.json();
+        return resolve(response.json());
       } else {
-        reject(new Error(response.statusText));
+        return reject(new Error(response.statusText));
       }
     });
   },
@@ -47,5 +46,4 @@ export default BaseAuthenticator.extend({
   invalidate() {
     return resolve();
   }
-
 });
