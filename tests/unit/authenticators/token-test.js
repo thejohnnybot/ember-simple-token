@@ -1,6 +1,7 @@
 // import Ember from 'ember';
 import { module, test } from 'qunit';
 import TokenAuthenticator from 'ember-simple-token/authenticators/token';
+import config from 'dummy/config/environment';
 import sinon from 'sinon';
 
 let server;
@@ -102,4 +103,38 @@ test('#authenticate - invalid request', assert => {
   }).catch(() => {
     assert.ok(true, 'promise was rejected');
   });
+});
+
+test('Config attributes are read properly from environment.js', assert => {
+  const emberSimpleTokenConf = config['ember-simple-token'];
+
+  assert.deepEqual(
+    emberSimpleTokenConf,
+    {
+      serverTokenEndpoint: 'customEndpoint',
+      identificationAttributeName: 'customAttributeName'
+    },
+    'Dummy apps environment.js has the expected simpleToken config ' +
+    'for this test to work'
+  );
+
+  const {
+    serverTokenEndpoint, identificationAttributeName
+  } = emberSimpleTokenConf;
+
+  assert.equal(
+    tokenAuthenticator.serverTokenEndpoint,
+    serverTokenEndpoint
+  );
+
+  assert.equal(
+    tokenAuthenticator.tokenAttributeName,
+    'token',
+    'use default attribute name if not present'
+  );
+
+  assert.equal(
+    tokenAuthenticator.identificationAttributeName,
+    identificationAttributeName
+  );
 });
