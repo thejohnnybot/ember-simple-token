@@ -129,7 +129,7 @@ test('Config attributes are read properly from environment.js', assert => {
   assert.equal(
     tokenAuthenticator.tokenAttributeName,
     'token',
-    'use default attribute name if not present'
+    'use default value for tokenAttributeName if it\'s empty'
   );
 
   assert.equal(
