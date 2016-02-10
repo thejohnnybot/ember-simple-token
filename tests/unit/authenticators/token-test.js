@@ -1,4 +1,3 @@
-// import Ember from 'ember';
 import { module, test } from 'qunit';
 import TokenAuthenticator from 'ember-simple-token/authenticators/token';
 import config from 'dummy/config/environment';
