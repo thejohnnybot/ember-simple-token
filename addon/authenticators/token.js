@@ -22,11 +22,13 @@ export default BaseAuthenticator.extend({
       },
       body: JSON.stringify(data)
     }).then((response) => {
-      if (response.status >= 200 && response.status < 300) {
-        return resolve(response.json());
-      } else {
-        return reject(new Error(response.statusText));
-      }
+      return response.json().then((json) => {
+        if (response.status >= 200 && response.status < 300) {
+          return resolve(json);
+        } else {
+          return reject(json);
+        }
+      });
     });
   },
 
