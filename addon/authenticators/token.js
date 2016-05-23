@@ -1,12 +1,12 @@
 import Ember from 'ember';
-import fetch from 'fetch';
 import config from 'ember-get-config';
 import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
 
-const { get, isEmpty, RSVP } = Ember;
+const { get, isEmpty, inject: { service }, RSVP } = Ember;
 const { resolve, reject } = RSVP;
 
 export default BaseAuthenticator.extend({
+  ajax: service(),
   serverTokenEndpoint: config['ember-simple-token'].serverTokenEndpoint || '/token',
 
   tokenAttributeName: config['ember-simple-token'].tokenAttributeName || 'token',
@@ -14,13 +14,8 @@ export default BaseAuthenticator.extend({
   identificationAttributeName: config['ember-simple-token'].identificationAttributeName || 'email',
 
   authenticate(data) {
-    return fetch(this.serverTokenEndpoint, {
-      method: 'post',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
+    return get(this, 'ajax').post(this.serverTokenEndpoint, {
+      data: JSON.stringify(data)
     }).then((response) => {
       return response.json().then((json) => {
         if (response.status >= 200 && response.status < 300) {
