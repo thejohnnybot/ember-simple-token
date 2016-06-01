@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import config from 'ember-get-config';
 import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
 
 const { get, isEmpty, inject: { service }, RSVP } = Ember;
@@ -7,11 +6,22 @@ const { resolve, reject } = RSVP;
 
 export default BaseAuthenticator.extend({
   ajax: service(),
-  serverTokenEndpoint: config['ember-simple-token'].serverTokenEndpoint || '/token',
 
-  tokenAttributeName: config['ember-simple-token'].tokenAttributeName || 'token',
+  serverTokenEndpoint: '/token',
 
-  identificationAttributeName: config['ember-simple-token'].identificationAttributeName || 'email',
+  tokenAttributeName: 'token',
+
+  identificationAttributeName: 'email',
+
+  init() {
+    this._super(...arguments);
+    const config = Ember.getOwner(this).resolveRegistration('config:environment')['ember-simple-token'];
+    if (config !== undefined) {
+      this.serverTokenEndpoint = config.serverTokenEndpoint;
+      this.tokenAttributeName = config.tokenAttributeName;
+      this.identificationAttributeName = config.identificationAttributeName;
+    }
+  },
 
   authenticate(data) {
     return get(this, 'ajax').post(this.serverTokenEndpoint, {
