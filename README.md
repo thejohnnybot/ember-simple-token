@@ -1,72 +1,26 @@
-# ember-simple-token
+# Simple-token
 
 This README outlines the details of collaborating on this Ember addon.
 
 ## Installation
 
-`ember install ember-simple-token`
+* `git clone` this repository
+* `npm install`
+* `bower install`
 
+## Running
 
-### Code to put in your component
+* `ember server`
+* Visit your app at http://localhost:4200.
 
-```javascript
-import Ember from 'ember';
+## Running Tests
 
-const { service } = Ember.inject;
+* `npm test` (Runs `ember try:testall` to test your addon against multiple Ember versions)
+* `ember test`
+* `ember test --server`
 
-export default Ember.Component.extend({
-  session: service(),
+## Building
 
-  actions: {
-    authenticate() {
-      let credentials = this.getProperties('identification', 'password');
-      this.get('session').authenticate('authenticator:token', credentials).catch((reason) => {
-        this.set('errorMessage', reason.error);
-      });
-    }
-  }
-});
-```
+* `ember build`
 
-### Code for the template
-
-```html
-<form {{action 'authenticate' on='submit'}}>
-  <div class="form-group">
-    <label for="identification">Login</label>
-    {{input value=identification placeholder='Enter Login' class='form-control'}}
-  </div>
-  <div class="form-group">
-    <label for="password">Password</label>
-    {{input value=password placeholder='Enter Password' class='form-control' type='password'}}
-  </div>
-  <button type="submit" class="btn btn-default">Login</button>
-</form>
-```
-
-### Ember-Data usage
-
-```javascript
-import DS from 'ember-data';
-import DataAdapterMixin from 'ember-simple-auth/mixins/data-adapter-mixin';
-
-export default DS.JSONAPIAdapter.extend(DataAdapterMixin, {
-  authorizer: 'authorizer:token'
-});
-```
-### Change Configuration
-
-```javascript
-ENV['ember-simple-token'] = {
-  serverTokenEndpoint: "/another-token",
-  identificationAttributeName: "email"
-};
-```
-
-### Generators
-`ember g login-scaffold <name>`
-
-Will generate all the code seen above in pod structure in a component
-
-### TODO:
-- [] Test
+For more information on using ember-cli, visit [http://ember-cli.com/](http://ember-cli.com/).

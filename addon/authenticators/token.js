@@ -1,25 +1,24 @@
 import Ember from 'ember';
-import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
+import Base from 'ember-simple-auth/authenticators/base';
+import Configuration from '../configuration';
 
-const { get, isEmpty, inject: { service }, RSVP } = Ember;
-const { resolve, reject } = RSVP;
+const { get, isEmpty, inject: { service }, RSVP: { resolve, reject } } = Ember;
 
-export default BaseAuthenticator.extend({
+export default Base.extend({
   ajax: service(),
 
-  serverTokenEndpoint: '/token',
+  serverTokenEndpoint: Configuration.serverTokenEndpoint,
 
-  tokenAttributeName: 'token',
+  tokenAttributeName: Configuration.tokenAttributeName,
 
-  identificationAttributeName: 'email',
+  identificationAttributeName: Configuration.identificationAttributeName,
 
-  init() {
-    this._super(...arguments);
-    const config = Ember.getOwner(this).resolveRegistration('config:environment')['ember-simple-token'];
-    if (config !== undefined) {
-      this.serverTokenEndpoint = config.serverTokenEndpoint;
-      this.tokenAttributeName = config.tokenAttributeName;
-      this.identificationAttributeName = config.identificationAttributeName;
+  restore(data) {
+    const token = get(data, this.tokenAttributeName);
+    if (!isEmpty(token)) {
+      return resolve(data);
+    } else {
+      return reject();
     }
   },
 
@@ -27,26 +26,10 @@ export default BaseAuthenticator.extend({
     return get(this, 'ajax').post(this.serverTokenEndpoint, {
       data: JSON.stringify(data)
     }).then((response) => {
-      return response.json().then((json) => {
-        if (response.status >= 200 && response.status < 300) {
-          return resolve(json);
-        } else {
-          return reject(json);
-        }
-      });
-    });
-  },
-
-  restore(data) {
-    const token = get(data, this.tokenAttributeName);
-    if (isEmpty(token)) {
+      return resolve(response);
+    }).catch((error) => {
+      Ember.Logger.warn(error);
       return reject();
-    } else {
-      return resolve(data);
-    }
-  },
-
-  invalidate() {
-    return resolve();
+    });
   }
 });

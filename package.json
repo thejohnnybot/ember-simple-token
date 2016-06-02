@@ -1,7 +1,7 @@
 {
-  "name": "ember-simple-token",
+  "name": "simple-token",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "A simple token auth implementation for ember-simple-auth",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -13,7 +13,7 @@
   },
   "repository": "",
   "engines": {
-    "node": ">= 5.11.1"
+    "node": ">= 0.10.0"
   },
   "author": "",
   "license": "MIT",
@@ -27,6 +27,7 @@
     "ember-cli-htmlbars-inline-precompile": "^0.3.1",
     "ember-cli-inject-live-reload": "^1.4.0",
     "ember-cli-jshint": "^1.0.0",
+    "ember-cli-mirage": "0.2.0",
     "ember-cli-qunit": "^1.4.0",
     "ember-cli-release": "0.2.8",
     "ember-cli-sri": "^2.1.0",

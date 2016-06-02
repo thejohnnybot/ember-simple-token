@@ -16,11 +16,6 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    },
-
-    'ember-simple-token': {
-      serverTokenEndpoint: 'customEndpoint',
-      identificationAttributeName: 'customAttributeName'
     }
   };
 
@@ -30,9 +25,6 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-    // ENV['ember-simple-token'] = {
-    //   serverTokenEndpoint: "/another-token"
-    // };
   }
 
   if (environment === 'test') {

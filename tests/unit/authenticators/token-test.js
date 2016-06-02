@@ -1,139 +1,63 @@
-import { module, test } from 'qunit';
-import TokenAuthenticator from 'ember-simple-token/authenticators/token';
-import config from 'dummy/config/environment';
+import Ember from 'ember';
 import sinon from 'sinon';
+import Token from 'simple-token/authenticators/token';
+import { module, test } from 'qunit';
 
-let server;
-let tokenAuthenticator;
+let xhr;
+let app;
+let authenticator;
 
-function mockAuthRequest(server, endpoint, status, responseBody, callback) {
-  server.respondWith('POST', endpoint, request => {
-    // fails in phantomjs for me, but works with this workaround:
-    // https://github.com/sinonjs/sinon/issues/864
-    request.responseType = 'text';
-    request.respond(
-      status,
-      { 'Content-Type': 'application/json' },
-      JSON.stringify(responseBody)
-    );
-    callback(request);
-  });
-}
-
-module('Unit | Authenticators | Token', {
+module('Unit | Authenticators | Token ', {
   beforeEach() {
-    server = sinon.fakeServer.create({
-      autoRespond: true
-    });
-    tokenAuthenticator = TokenAuthenticator.create();
+    xhr = sinon.useFakeXMLHttpRequest();
+    app = sinon.fakeServer.create({ autoRespond: true });
+    authenticator = Token.create();
   },
+
   afterEach() {
-    server.restore();
-    tokenAuthenticator = null;
+    xhr.restore();
   }
 });
 
-test('#invalidate', (assert) => {
-  assert.expect(1);
+test('#authenticate resolves with correct data', (assert) => {
+  const credentials = {
+    email: 'test@example.com',
+    password: 'password'
+  };
 
-  return tokenAuthenticator.invalidate().then(() => {
-    assert.ok(true, 'invalidate always resolves');
-  });
-});
+  const properties = {
+    token: 'secret!'
+  };
 
-test('#restore - token present in data', assert => {
-  assert.expect(1);
-  const attributeName = tokenAuthenticator.tokenAttributeName;
-  const data = {};
-  data[attributeName] = 'authdata';
-
-  return tokenAuthenticator.restore(data).then(callbackData => {
-    assert.deepEqual(
-      data,
-      callbackData
-    );
-  });
-});
-
-test('#restore - data empty', assert => {
-  assert.expect(1);
-  const data = {};
-
-  return tokenAuthenticator.restore(data).then(() => {
-    assert.ok(false, 'promise should not be fullfiled');
-  }).catch(() => {
-    assert.ok(true, 'promise was rejected');
-  });
-});
-
-test('#authenticate - valid request', assert => {
-  assert.expect(2);
-  const endpoint = tokenAuthenticator.serverTokenEndpoint;
-  const data = { login: 'foo', pass: 'bar' };
-  const responseBody = { 'user_token': 'secret token!' };
-
-  mockAuthRequest(server, endpoint, 201, responseBody, request => {
-    const requestBody = JSON.parse(request.requestBody);
-    assert.deepEqual(data, requestBody);
-  });
-
-  return tokenAuthenticator.authenticate(data).then(callbackData => {
-    assert.deepEqual(
-      callbackData,
-      responseBody,
-      'callbackData matches responseBody'
-    );
-  });
-});
-
-test('#authenticate - invalid request', assert => {
-  assert.expect(2);
-  const endpoint = tokenAuthenticator.serverTokenEndpoint;
-  const data = { login: 'foo', pass: 'bar' };
-  const responseBody = { error: 'foo error occured!' };
-
-  mockAuthRequest(server, endpoint, 400, responseBody, request => {
-    const requestBody = JSON.parse(request.requestBody);
-    assert.deepEqual(data, requestBody);
-  });
-
-  return tokenAuthenticator.authenticate(data).then(() => {
-    assert.ok(false, 'promise should not be fullfiled');
-  }).catch(() => {
-    assert.ok(true, 'promise was rejected');
-  });
-});
-
-test('Config attributes are read properly from environment.js', assert => {
-  const emberSimpleTokenConf = config['ember-simple-token'];
-
-  assert.deepEqual(
-    emberSimpleTokenConf,
-    {
-      serverTokenEndpoint: 'customEndpoint',
-      identificationAttributeName: 'customAttributeName'
+  app.respondWith('POST', '/token/', [
+    201, {
+      'Content-Type': 'application/json'
     },
-    'Dummy apps environment.js has the expected simpleToken config ' +
-    'for this test to work'
-  );
+    '{ "token": "secret!" }'
+  ]);
 
-  const {
-    serverTokenEndpoint, identificationAttributeName
-  } = emberSimpleTokenConf;
+  Ember.run(() => {
+    authenticator.authenticate(credentials).then((content) => {
+      assert.deepEqual(content, properties);
+    });
+  });
+});
 
-  assert.equal(
-    tokenAuthenticator.serverTokenEndpoint,
-    serverTokenEndpoint
-  );
+test('#restore resolves with the correct data', (assert) => {
+  const properties = {
+    token: 'secret!'
+  };
 
-  assert.equal(
-    tokenAuthenticator.tokenAttributeName,
-    'token',
-    'use default value for tokenAttributeName if it\'s empty'
-  );
+  app.respondWith('POST', '/token/', [
+    201, {
+      'Content-Type': 'application/json'
+    },
+    '{ "token": "secret!" }'
+  ]);
 
-  assert.equal(
-    tokenAuthenticator.identificationAttributeName,
-    identificationAttributeName
-  );
+  Ember.run(() => {
+    authenticator.restore(properties).then((content) => {
+      assert.deepEqual(content, properties);
+    });
+  });
 });
