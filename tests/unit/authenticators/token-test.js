@@ -19,29 +19,29 @@ module('Unit | Authenticators | Token ', {
   }
 });
 
-test('#authenticate resolves with correct data', (assert) => {
-  const credentials = {
-    email: 'test@example.com',
-    password: 'password'
-  };
+// test('#authenticate resolves with correct data', (assert) => {
+//   const credentials = {
+//     email: 'test@example.com',
+//     password: 'password'
+//   };
 
-  const properties = {
-    token: 'secret!'
-  };
+//   const properties = {
+//     token: 'secret!'
+//   };
 
-  app.respondWith('POST', '/token/', [
-    201, {
-      'Content-Type': 'application/json'
-    },
-    '{ "token": "secret!" }'
-  ]);
+//   app.respondWith('POST', '/token/', [
+//     201, {
+//       'Content-Type': 'application/json'
+//     },
+//     '{ "token": "secret!" }'
+//   ]);
 
-  Ember.run(() => {
-    authenticator.authenticate(credentials).then((content) => {
-      assert.deepEqual(content, properties);
-    });
-  });
-});
+//   Ember.run(() => {
+//     authenticator.authenticate(credentials).then((content) => {
+//       assert.deepEqual(content, properties);
+//     });
+//   });
+// });
 
 test('#restore resolves with the correct data', (assert) => {
   const properties = {
