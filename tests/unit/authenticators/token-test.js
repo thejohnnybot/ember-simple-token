@@ -1,17 +1,18 @@
 import Ember from 'ember';
 import sinon from 'sinon';
-import Token from 'simple-token/authenticators/token';
-import { module, test } from 'qunit';
+import { moduleFor, test } from 'ember-qunit';
 
 let xhr;
 let app;
 let authenticator;
 
-module('Unit | Authenticators | Token ', {
+moduleFor('authenticator:token', {
+  needs: ['service:ajax'],
+
   beforeEach() {
     xhr = sinon.useFakeXMLHttpRequest();
     app = sinon.fakeServer.create({ autoRespond: true });
-    authenticator = Token.create();
+    authenticator = Ember.getOwner(this).lookup('authenticator:token');
   },
 
   afterEach() {
@@ -19,31 +20,33 @@ module('Unit | Authenticators | Token ', {
   }
 });
 
-// test('#authenticate resolves with correct data', (assert) => {
-//   const credentials = {
-//     email: 'test@example.com',
-//     password: 'password'
-//   };
+test('#authenticate resolves with correct data', (assert) => {
+  assert.expect(1);
 
-//   const properties = {
-//     token: 'secret!'
-//   };
+  const credentials = {
+    email: 'test@example.com',
+    password: 'password'
+  };
 
-//   app.respondWith('POST', '/token/', [
-//     201, {
-//       'Content-Type': 'application/json'
-//     },
-//     '{ "token": "secret!" }'
-//   ]);
+  const properties = {
+    token: 'secret!'
+  };
 
-//   Ember.run(() => {
-//     authenticator.authenticate(credentials).then((content) => {
-//       assert.deepEqual(content, properties);
-//     });
-//   });
-// });
+  app.respondWith('POST', '/token', [
+    201, {
+      'Content-Type': 'application/json'
+    },
+    '{ "token": "secret!" }'
+  ]);
+
+  return authenticator.authenticate(credentials).then((content) => {
+    assert.deepEqual(content, properties);
+  });
+});
 
 test('#restore resolves with the correct data', (assert) => {
+  assert.expect(1);
+
   const properties = {
     token: 'secret!'
   };
@@ -55,9 +58,7 @@ test('#restore resolves with the correct data', (assert) => {
     '{ "token": "secret!" }'
   ]);
 
-  Ember.run(() => {
-    authenticator.restore(properties).then((content) => {
-      assert.deepEqual(content, properties);
-    });
+  return authenticator.restore(properties).then((content) => {
+    assert.deepEqual(content, properties);
   });
 });
