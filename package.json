@@ -1,6 +1,6 @@
 {
   "name": "simple-token",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A simple token auth implementation for ember-simple-auth",
   "directories": {
     "doc": "doc",
@@ -13,7 +13,7 @@
   },
   "repository": "",
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">= 5.11.1"
   },
   "author": "",
   "license": "MIT",
