@@ -11,11 +11,11 @@
     "start": "ember server",
     "test": "ember try:testall"
   },
-  "repository": "",
+  "repository": "https://github.com/datajohnny/ember-simple-token",
   "engines": {
     "node": ">= 5.11.1"
   },
-  "author": "",
+  "author": "Johnny Mejias",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",

@@ -14,6 +14,6 @@ module.exports = function(defaults) {
     behave. You most likely want to be modifying `./index.js` or app's build file
   */
 
-  app.import('vendor/simple-token/register-version.js');
+  app.import('vendor/ember-simple-token/register-version.js');
   return app.toTree();
 };
