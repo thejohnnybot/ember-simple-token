@@ -1,15 +1,15 @@
 import Ember from 'ember';
 
-const { service } = Ember.inject;
+const { get, getProperties, inject: { service }, set } = Ember;
 
 export default Ember.Component.extend({
   session: service(),
 
   actions: {
     authenticate() {
-      let credentials = this.getProperties('email', 'password');
-      this.get('session').authenticate('authenticator:token', credentials).catch((reason) => {
-        this.set('errorMessage', reason.error);
+      let credentials = getProperties(this, 'email', 'password');
+      get(this, 'session').authenticate('authenticator:token', credentials).catch((reason) => {
+        set(this, 'errorMessage', reason.error);
       });
     }
   }

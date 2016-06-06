@@ -1,18 +1,18 @@
 import Ember from 'ember';
 import layout from '../templates/components/login-form';
 
-const { service } = Ember.inject;
+const { get, getProperties, inject: { service }, set } = Ember;
 
 export default Ember.Component.extend({
-  layout: layout,
+  layout,
 
   session: service(),
 
   actions: {
     authenticate() {
-      let credentials = this.getProperties('identification', 'password');
-      this.get('session').authenticate('authenticator:token', credentials).catch((reason) => {
-        this.set('errorMessage', reason.error);
+      let credentials = getProperties(this, 'email', 'password');
+      get(this, 'session').authenticate('authenticator:token', credentials).catch((reason) => {
+        set(this, 'errorMessage', reason.error);
       });
     }
   }

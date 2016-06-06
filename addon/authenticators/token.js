@@ -1,47 +1,35 @@
 import Ember from 'ember';
-import fetch from 'fetch';
-import config from 'ember-get-config';
-import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
+import Base from 'ember-simple-auth/authenticators/base';
+import Configuration from '../configuration';
 
-const { get, isEmpty, RSVP } = Ember;
-const { resolve, reject } = RSVP;
+const { get, isEmpty, inject: { service }, RSVP: { resolve, reject } } = Ember;
 
-export default BaseAuthenticator.extend({
-  serverTokenEndpoint: config['ember-simple-token'].serverTokenEndpoint || '/token',
+export default Base.extend({
+  ajax: service(),
 
-  tokenAttributeName: config['ember-simple-token'].tokenAttributeName || 'token',
+  serverTokenEndpoint: Configuration.serverTokenEndpoint,
 
-  identificationAttributeName: config['ember-simple-token'].identificationAttributeName || 'email',
+  tokenAttributeName: Configuration.tokenAttributeName,
 
-  authenticate(data) {
-    return fetch(this.serverTokenEndpoint, {
-      method: 'post',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }).then((response) => {
-      return response.json().then((json) => {
-        if (response.status >= 200 && response.status < 300) {
-          return resolve(json);
-        } else {
-          return reject(json);
-        }
-      });
-    });
-  },
+  identificationAttributeName: Configuration.identificationAttributeName,
 
   restore(data) {
     const token = get(data, this.tokenAttributeName);
-    if (isEmpty(token)) {
-      return reject();
-    } else {
+    if (!isEmpty(token)) {
       return resolve(data);
+    } else {
+      return reject();
     }
   },
 
-  invalidate() {
-    return resolve();
+  authenticate(data) {
+    return get(this, 'ajax').post(this.serverTokenEndpoint, {
+      data: JSON.stringify(data)
+    }).then((response) => {
+      return resolve(response);
+    }).catch((error) => {
+      Ember.Logger.warn(error);
+      return reject();
+    });
   }
 });

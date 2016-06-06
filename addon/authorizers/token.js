@@ -1,11 +1,11 @@
 import Ember from 'ember';
-import config from 'ember-get-config';
-import BaseAuthorizer from 'ember-simple-auth/authorizers/base';
+import Base from 'ember-simple-auth/authorizers/base';
+import Configuration from '../configuration';
 
 const { get, isEmpty } = Ember;
 
-export default BaseAuthorizer.extend({
-  tokenAttributeName: config['ember-simple-token'].tokenAttributeName || 'token',
+export default Base.extend({
+  tokenAttributeName: Configuration.tokenAttributeName,
 
   authorize(data, block) {
     const token = get(data, this.tokenAttributeName);
