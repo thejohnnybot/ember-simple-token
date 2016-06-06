@@ -1,1 +1,1 @@
-export { default } from 'simple-token/authorizers/token';
+export { default } from 'ember-simple-token/authorizers/token';

@@ -1,1 +1,1 @@
-export { default } from 'simple-token/authenticators/token';
+export { default } from 'ember-simple-token/authenticators/token';
