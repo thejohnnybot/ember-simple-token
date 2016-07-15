@@ -7,11 +7,12 @@ const { get, isEmpty, inject: { service }, RSVP: { resolve, reject } } = Ember;
 export default Base.extend({
   ajax: service(),
 
-  serverTokenEndpoint: Configuration.serverTokenEndpoint,
-
-  tokenAttributeName: Configuration.tokenAttributeName,
-
-  identificationAttributeName: Configuration.identificationAttributeName,
+  init() {
+    this._super(...arguments);
+    this.serverTokenEndpoint = Configuration.serverTokenEndpoint;
+    this.tokenAttributeName = Configuration.tokenAttributeName;
+    this.identificationAttributeName = Configuration.identificationAttributeName;
+  },
 
   restore(data) {
     const token = get(data, this.tokenAttributeName);

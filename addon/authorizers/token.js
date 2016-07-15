@@ -5,7 +5,10 @@ import Configuration from '../configuration';
 const { get, isEmpty } = Ember;
 
 export default Base.extend({
-  tokenAttributeName: Configuration.tokenAttributeName,
+  init() {
+    this._super(...arguments);
+    this.tokenAttributeName = Configuration.tokenAttributeName;
+  },
 
   authorize(data, block) {
     const token = get(data, this.tokenAttributeName);
