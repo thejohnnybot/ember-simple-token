@@ -27,11 +27,6 @@ export default Base.extend({
     return get(this, 'ajax').post(this.serverTokenEndpoint, {
       contentType: 'application/json',
       data: JSON.stringify(data)
-    }).then((response) => {
-      return resolve(response);
-    }).catch((error) => {
-      Ember.Logger.warn(error);
-      return reject();
     });
   }
 });
